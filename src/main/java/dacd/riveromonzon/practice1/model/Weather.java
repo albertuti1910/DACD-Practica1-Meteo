@@ -20,4 +20,32 @@ public class Weather {
 		this.location = location;
 		this.timeStamp = timeStamp;
 	}
+
+	public Float getTemperature() {
+		return temperature;
+	}
+
+	public Float getRain() {
+		return rain;
+	}
+
+	public Integer getHumidity() {
+		return humidity;
+	}
+
+	public Integer getClouds() {
+		return clouds;
+	}
+
+	public Float getWindSpeed() {
+		return windSpeed;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public Instant getTimeStamp() {
+		return timeStamp;
+	}
 }

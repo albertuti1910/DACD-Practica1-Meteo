@@ -2,10 +2,10 @@ package dacd.riveromonzon.practice1.model;
 
 public class Location {
 	private String name;
-	private Float latitude;
-	private Float longitude;
+	private double latitude;
+	private double longitude;
 
-	public Location(String name, Float latitude, Float longitude) {
+	public Location(String name, double latitude, double longitude) {
 		this.name = name;
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -15,11 +15,11 @@ public class Location {
 		return name;
 	}
 
-	public Float getLatitude() {
+	public double getLatitude() {
 		return latitude;
 	}
 
-	public Float getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
 }

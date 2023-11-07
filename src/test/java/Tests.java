@@ -1,7 +1,12 @@
 import dacd.riveromonzon.Main;
+import dacd.riveromonzon.practice1.control.OpenWeatherMapProvider;
+import dacd.riveromonzon.practice1.control.WeatherProvider;
 import dacd.riveromonzon.practice1.model.Location;
+import dacd.riveromonzon.practice1.model.Weather;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.time.Instant;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
