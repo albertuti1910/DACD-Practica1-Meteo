@@ -4,9 +4,9 @@ import java.time.Instant;
 
 public class Weather {
 	private Float temperature;
-	private Float rain;	//TODO: Precipitaciones de Rain y Snow
+	private Float rain;
 	private Integer humidity;
-	private Integer clouds; //FIXME: Coger weather description o % de cloudiness.
+	private Integer clouds;
 	private Float windSpeed;
 	private Location location;
 	private Instant timeStamp;

@@ -10,4 +10,16 @@ public class Location {
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Float getLatitude() {
+		return latitude;
+	}
+
+	public Float getLongitude() {
+		return longitude;
+	}
 }

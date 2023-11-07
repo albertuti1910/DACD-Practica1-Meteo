@@ -6,5 +6,5 @@ import dacd.riveromonzon.practice1.model.Weather;
 import java.time.Instant;
 
 public interface WeatherProvider {
-	Weather getWeather(Location location, Instant timeStamp);
+	Weather getWeatherData(Location location, Instant timeStamp);
 }
