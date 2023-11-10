@@ -12,7 +12,7 @@ public class Main {
 		List<Location> locations = loadLocationsFromFile("/locations.tsv");
 
 		WeatherProvider weatherProvider = new OpenWeatherMapProvider(12);
-		WeatherStore weatherStore = new SQLiteWeatherStore();
+		WeatherStore weatherStore = new SQLiteWeatherStore2();
 
 		for (Location location : locations) {
 			WeatherController controller = new WeatherController(location, 5, weatherProvider, weatherStore);

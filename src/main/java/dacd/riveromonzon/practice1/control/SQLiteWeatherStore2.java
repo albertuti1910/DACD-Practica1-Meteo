@@ -1,13 +1,17 @@
+package dacd.riveromonzon.practice1.control;
+
 import dacd.riveromonzon.practice1.control.WeatherStore;
 import dacd.riveromonzon.practice1.model.Location;
 import dacd.riveromonzon.practice1.model.Weather;
 
 import java.io.File;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.Instant;
 
-public class SQLiteWeatherStore implements WeatherStore {
+public class SQLiteWeatherStore2 implements WeatherStore {
 	public void storeWeatherData(Weather weather, Location location, Instant timeStamp) {
 		String dbPath = "storage/weather.db";
 		new File(dbPath).getParentFile().mkdirs();

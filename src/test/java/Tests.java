@@ -13,7 +13,7 @@ import static org.junit.Assert.assertNotNull;
 
 public class Tests {
 	@Test
-	public void testLocations() {  //FIXME: Arreglar filepath para unicamente poner locations.tsv en lugar de todo el path.
+	public void testLocations() {
 		String filePath = "/locations.tsv";
 		List<Location> locations = Main.loadLocationsFromFile(filePath);
 		assertNotNull("Locations should not be null", locations);
