@@ -34,7 +34,6 @@ public class WeatherController {
 		for (int day = 0; day < daysForecasted; day++) {
 			System.out.println("Timestamp for day " + (day + 1) + ": " + timeStamp);
 			Weather weatherData = weatherProvider.getWeatherData(location, timeStamp);
-			//weatherStore.storeWeatherData(weatherData, location, timeStamp);
 			weatherStore.storeWeatherData(weatherData);
 			timeStamp = timeStamp.plus(Duration.ofDays(1));
 		}
