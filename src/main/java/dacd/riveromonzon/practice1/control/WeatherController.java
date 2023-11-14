@@ -22,17 +22,16 @@ public class WeatherController {
 		this.weatherStore = weatherStore;
 	}
 
-	public void execute() {
+	public void execute() { //FIXME: Fix scheduler logic.
 		ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 		executeLogic();
 		scheduler.scheduleAtFixedRate(this::executeLogic, 6, 6, TimeUnit.HOURS);
 	}
 
-	private void executeLogic() {
+	private void executeLogic() { //FIXME: Fix scheduler logic.
 		Instant timeStamp = Instant.now();
 		SQLiteWeatherStore.main();
 		for (int day = 0; day < daysForecasted; day++) {
-			System.out.println("Timestamp for day " + (day + 1) + ": " + timeStamp);
 			Weather weatherData = weatherProvider.getWeatherData(location, timeStamp);
 			weatherStore.storeWeatherData(weatherData);
 			timeStamp = timeStamp.plus(Duration.ofDays(1));

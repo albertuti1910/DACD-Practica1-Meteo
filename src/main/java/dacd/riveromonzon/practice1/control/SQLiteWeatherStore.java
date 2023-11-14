@@ -88,7 +88,6 @@ public class SQLiteWeatherStore implements WeatherStore {
 			preparedStatement.setString(6, formatTimestamp(weather.getTimeStamp()));
 
 			preparedStatement.executeUpdate();
-			System.out.println("Data successfully updated / inserted");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

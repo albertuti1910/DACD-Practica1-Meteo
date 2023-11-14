@@ -78,14 +78,6 @@ public class OpenWeatherMapProvider implements WeatherProvider {
 		Float windSpeed = windObject.get("speed").getAsFloat();
 
 		Weather weather = new Weather(temperature, pop, humidity, clouds, windSpeed, location, timeStamp);
-		System.out.println("Weather Data:");
-		System.out.println("  Temperature: " + weather.getTemperature());
-		System.out.println("  Rain: " + weather.getRain());
-		System.out.println("  Humidity: " + weather.getHumidity());
-		System.out.println("  Clouds: " + weather.getClouds());
-		System.out.println("  Wind Speed: " + weather.getWindSpeed());
-		System.out.println("  Location: " + weather.getLocation().getName());
-		System.out.println("  Timestamp: " + weather.getTimeStamp());
 		return weather;
 	}
 }

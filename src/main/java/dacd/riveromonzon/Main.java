@@ -19,6 +19,7 @@ public class Main {
 
 			controller.execute();
 		}
+		System.out.println("Code execution ended.");
 	}
 
 	public static List<Location> loadLocationsFromFile(String filePath) {
