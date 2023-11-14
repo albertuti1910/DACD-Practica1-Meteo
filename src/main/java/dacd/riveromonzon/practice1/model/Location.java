@@ -15,11 +15,11 @@ public class Location {
 		return name;
 	}
 
-	public double getLatitude() {
+	public Float getLatitude() {
 		return latitude;
 	}
 
-	public double getLongitude() {
+	public Float getLongitude() {
 		return longitude;
 	}
 }

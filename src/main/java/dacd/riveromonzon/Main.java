@@ -11,11 +11,12 @@ public class Main {
 	public static void main(String[] args) {
 		List<Location> locations = loadLocationsFromFile("/locations.tsv");
 
-		WeatherProvider weatherProvider = new OpenWeatherMapProvider(12);
-		WeatherStore weatherStore = new SQLiteWeatherStore2();
+		WeatherProvider weatherProvider = new OpenWeatherMapProvider(args[0], Integer.parseInt(args[1]));
+		WeatherStore weatherStore = new SQLiteWeatherStore();
 
 		for (Location location : locations) {
-			WeatherController controller = new WeatherController(location, 5, weatherProvider, weatherStore);
+			WeatherController controller = new WeatherController(location, Integer.parseInt(args[2]), weatherProvider, weatherStore);
+
 			controller.execute();
 		}
 	}
