@@ -3,13 +3,13 @@ package dacd.riveromonzon.practice1.model;
 import java.time.Instant;
 
 public class Weather {
-	private Float temperature;
-	private Float rain;
-	private Integer humidity;
-	private Integer clouds;
-	private Float windSpeed;
-	private Location location;
-	private Instant timeStamp;
+	private final Float temperature;
+	private final Float rain;
+	private final Integer humidity;
+	private final Integer clouds;
+	private final Float windSpeed;
+	private final Location location;
+	private final Instant timeStamp;
 
 	public Weather(Float temperature, Float rain, Integer humidity, Integer clouds, Float windSpeed, Location location, Instant timeStamp) {
 		this.temperature = temperature;

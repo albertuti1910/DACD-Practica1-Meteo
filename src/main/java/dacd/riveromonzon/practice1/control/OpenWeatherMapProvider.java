@@ -46,7 +46,6 @@ public class OpenWeatherMapProvider implements WeatherProvider {
 			Instant forecastDateTime = Instant.ofEpochSecond(forecastEntry.get("dt").getAsLong());
 
 			if (isDesiredForecastTime(forecastDateTime, timeStamp)) {
-				//Weather weather = extractWeatherData(forecastEntry, location, forecastDateTime);
 				return extractWeatherData(forecastEntry, location, forecastDateTime);
 			}
 		}
@@ -77,7 +76,6 @@ public class OpenWeatherMapProvider implements WeatherProvider {
 		Integer clouds = cloudsObject.get("all").getAsInt();
 		Float windSpeed = windObject.get("speed").getAsFloat();
 
-		//Weather weather = new Weather(temperature, pop, humidity, clouds, windSpeed, location, timeStamp);
 		return new Weather(temperature, pop, humidity, clouds, windSpeed, location, timeStamp);
 	}
 }

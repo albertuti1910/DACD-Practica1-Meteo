@@ -12,22 +12,23 @@ import java.util.Timer;
 public class Main {
 	public static void main(String[] args) {
 		List<Location> locations = loadLocationsFromFile("/locations.tsv");
-
 		WeatherProvider weatherProvider = new OpenWeatherMapProvider(args[0], Integer.parseInt(args[1]));
 		WeatherStore weatherStore = new SQLiteWeatherStore();
-
 		Timer sharedTimer = new Timer();
 		
 		for (Location location : locations) {
 			WeatherController controller = new WeatherController(location, Integer.parseInt(args[2]), weatherProvider, weatherStore, sharedTimer);
-
 			controller.execute(Instant.now());
 		}
-		System.out.println("Code execution ended.");
 	}
 
 	public static List<Location> loadLocationsFromFile(String filePath) {
 		InputStream resourceAsStream = Main.class.getResourceAsStream(filePath);
+		if (resourceAsStream == null) {
+			System.err.println("File not found or could not be opened: " + filePath);
+			return new ArrayList<>();
+		}
+
 		List<Location> locations = new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream))) {
 			String line;
@@ -41,7 +42,7 @@ public class Main {
 				}
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("Error reading the file: " + e.getMessage());
 		}
 		return locations;
 	}

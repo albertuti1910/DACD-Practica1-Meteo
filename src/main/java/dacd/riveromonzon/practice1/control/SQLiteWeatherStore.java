@@ -14,9 +14,9 @@ import java.util.List;
 public class SQLiteWeatherStore implements WeatherStore {
 	private static final String DATABASE_PATH = "storage/weather.db";
 
-	public static void main() {
+	public static void createOrInitialise() {
 		createDatabaseIfNotExists();
-		initializeDatabase();
+		initialiseDatabase();
 	}
 
 	private static void createDatabaseIfNotExists() {
@@ -30,13 +30,13 @@ public class SQLiteWeatherStore implements WeatherStore {
 		}
 	}
 
-	private static void initializeDatabase() {
+	private static void initialiseDatabase() {
 		try (Connection connection = connect()) {
 			Statement statement = connection.createStatement();
 			List<Location> locations = Main.loadLocationsFromFile("/locations.tsv");
 			createWeatherDataTable(statement, locations);
 		} catch (SQLException e) {
-			throw new RuntimeException("Error initializing the database", e);
+			throw new RuntimeException("Error initialising the database", e);
 		}
 	}
 
@@ -47,7 +47,7 @@ public class SQLiteWeatherStore implements WeatherStore {
 	private static void createWeatherDataTable(Statement statement, List<Location> locations) throws SQLException {
 		for (Location location : locations) {
 			String tableName = getSafeTableName(location.getName());
-			String createTableSQL = "CREATE TABLE IF NOT EXISTS " + tableName + "_weather_data (" +
+			String createTableSQL = "CREATE TABLE IF NOT EXISTS " + tableName + "_weatherData (" +
 					"id INTEGER PRIMARY KEY AUTOINCREMENT," +
 					"temperature REAL," +
 					"rain REAL," +
@@ -78,7 +78,7 @@ public class SQLiteWeatherStore implements WeatherStore {
 	}
 
 	private void updateOrInsertWeatherData(String tableName, Weather weather, Instant storeInstant) {
-		String insertSQL = "INSERT OR REPLACE INTO " + tableName + "_weather_data " +
+		String insertSQL = "INSERT OR REPLACE INTO " + tableName + "_weatherData " +
 				"(temperature, rain, humidity, clouds, wind_speed, weather_timestamp, store_timestamp) " +
 				"VALUES (ROUND(?,2), ?, ?, ?, ROUND(?,2), ?, ?)";
 
@@ -94,7 +94,6 @@ public class SQLiteWeatherStore implements WeatherStore {
 			preparedStatement.setString(7, formatTimestamp(storeInstant));
 
 			preparedStatement.executeUpdate();
-			System.out.println("Stored");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
