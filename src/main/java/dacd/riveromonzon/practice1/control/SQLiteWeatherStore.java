@@ -46,14 +46,18 @@ public class SQLiteWeatherStore implements WeatherStore {
 
 	private static void createWeatherDataTable(Statement statement, List<Location> locations) throws SQLException {
 		for (Location location : locations) {
-			statement.execute("CREATE TABLE IF NOT EXISTS " + getSafeTableName(location.getName()) + "_weather_data (" +
+			String tableName = getSafeTableName(location.getName());
+			String createTableSQL = "CREATE TABLE IF NOT EXISTS " + tableName + "_weather_data (" +
 					"id INTEGER PRIMARY KEY AUTOINCREMENT," +
 					"temperature REAL," +
 					"rain REAL," +
 					"humidity INTEGER," +
 					"clouds INTEGER," +
 					"wind_speed REAL," +
-					"timestamp TIMESTAMP UNIQUE)");
+					"weather_timestamp TIMESTAMP UNIQUE," +
+					"store_timestamp TIMESTAMP)";
+
+			statement.execute(createTableSQL);
 		}
 	}
 
@@ -65,17 +69,18 @@ public class SQLiteWeatherStore implements WeatherStore {
 	public void storeWeatherData(Weather weather) {
 		Location location = weather.getLocation();
 		String tableName = getSafeTableName(location.getName());
-		updateOrInsertWeatherData(tableName, weather);
+		Instant nowTimeStamp = Instant.now();
+		updateOrInsertWeatherData(tableName, weather, nowTimeStamp);
 	}
 
 	private String formatTimestamp(Instant timestamp) {
 		return DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").format(timestamp.atZone(ZoneId.of("UTC")));
 	}
 
-	private void updateOrInsertWeatherData(String tableName, Weather weather) {
+	private void updateOrInsertWeatherData(String tableName, Weather weather, Instant storeInstant) {
 		String insertSQL = "INSERT OR REPLACE INTO " + tableName + "_weather_data " +
-				"(temperature, rain, humidity, clouds, wind_speed, timestamp) " +
-				"VALUES (ROUND(?,2), ?, ?, ?, ROUND(?,2), ?)";
+				"(temperature, rain, humidity, clouds, wind_speed, weather_timestamp, store_timestamp) " +
+				"VALUES (ROUND(?,2), ?, ?, ?, ROUND(?,2), ?, ?)";
 
 		try (Connection connection = connect();
 			 PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
@@ -86,8 +91,10 @@ public class SQLiteWeatherStore implements WeatherStore {
 			preparedStatement.setInt(4, weather.getClouds());
 			preparedStatement.setDouble(5, weather.getWindSpeed());
 			preparedStatement.setString(6, formatTimestamp(weather.getTimeStamp()));
+			preparedStatement.setString(7, formatTimestamp(storeInstant));
 
 			preparedStatement.executeUpdate();
+			System.out.println("Stored");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

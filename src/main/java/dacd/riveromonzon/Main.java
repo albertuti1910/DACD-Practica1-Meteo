@@ -4,8 +4,10 @@ import dacd.riveromonzon.practice1.control.*;
 import dacd.riveromonzon.practice1.model.Location;
 
 import java.io.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 public class Main {
 	public static void main(String[] args) {
@@ -14,10 +16,12 @@ public class Main {
 		WeatherProvider weatherProvider = new OpenWeatherMapProvider(args[0], Integer.parseInt(args[1]));
 		WeatherStore weatherStore = new SQLiteWeatherStore();
 
+		Timer sharedTimer = new Timer();
+		
 		for (Location location : locations) {
-			WeatherController controller = new WeatherController(location, Integer.parseInt(args[2]), weatherProvider, weatherStore);
+			WeatherController controller = new WeatherController(location, Integer.parseInt(args[2]), weatherProvider, weatherStore, sharedTimer);
 
-			controller.execute();
+			controller.execute(Instant.now());
 		}
 		System.out.println("Code execution ended.");
 	}
