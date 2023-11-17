@@ -74,7 +74,7 @@ public class SQLiteWeatherStore implements WeatherStore {
 	}
 
 	private String formatTimestamp(Instant timestamp) {
-		return DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss").format(timestamp.atZone(ZoneId.of("UTC")));
+		return DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy").format(timestamp.atZone(ZoneId.of("UTC")));
 	}
 
 	private void updateOrInsertWeatherData(String tableName, Weather weather, Instant storeInstant) {

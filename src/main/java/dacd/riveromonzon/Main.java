@@ -2,6 +2,7 @@ package dacd.riveromonzon;
 
 import dacd.riveromonzon.practice1.control.*;
 import dacd.riveromonzon.practice1.model.Location;
+import dacd.riveromonzon.practice1.view.ProgressGUI;
 
 import java.io.*;
 import java.time.Instant;
@@ -12,12 +13,14 @@ import java.util.Timer;
 public class Main {
 	public static void main(String[] args) {
 		List<Location> locations = loadLocationsFromFile("/locations.tsv");
+
 		WeatherProvider weatherProvider = new OpenWeatherMapProvider(args[0], Integer.parseInt(args[1]));
 		WeatherStore weatherStore = new SQLiteWeatherStore();
 		Timer sharedTimer = new Timer();
-		
+		ProgressGUI progressGUI = new ProgressGUI();
+
 		for (Location location : locations) {
-			WeatherController controller = new WeatherController(location, Integer.parseInt(args[2]), weatherProvider, weatherStore, sharedTimer);
+			WeatherController controller = new WeatherController(location, Integer.parseInt(args[2]), weatherProvider, weatherStore, sharedTimer, progressGUI);
 			controller.execute(Instant.now());
 		}
 	}

@@ -2,6 +2,7 @@ package dacd.riveromonzon.practice1.control;
 
 import dacd.riveromonzon.practice1.model.Location;
 import dacd.riveromonzon.practice1.model.Weather;
+import dacd.riveromonzon.practice1.view.ProgressGUI;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -16,14 +17,16 @@ public class WeatherController {
 	private final Timer timer;
 	private int completedTasks;
 	private final Object lock = new Object();
+	private final ProgressGUI progressGUI;
 
-	public WeatherController(Location location, int daysForecasted, WeatherProvider weatherProvider, WeatherStore weatherStore, Timer timer) {
+	public WeatherController(Location location, int daysForecasted, WeatherProvider weatherProvider, WeatherStore weatherStore, Timer timer, ProgressGUI progressGUI) {
 		this.location = location;
 		this.daysForecasted = daysForecasted;
 		this.weatherProvider = weatherProvider;
 		this.weatherStore = weatherStore;
 		this.timer = timer;
 		this.completedTasks = 0;
+		this.progressGUI = progressGUI;
 	}
 
 	public void execute(Instant timeStamp) {
@@ -53,16 +56,14 @@ public class WeatherController {
 	private void signalCompletion() {
 		synchronized (lock) {
 			completedTasks++;
-			displayProgress();
+			if (progressGUI != null) {
+				int progress = (completedTasks * 100) / daysForecasted;
+				progressGUI.updateProgress(progress, "Processing: " + location.getName());
+			}
 			if (completedTasks >= daysForecasted) {
 				resetProgress();
 			}
 		}
-	}
-
-	private void displayProgress() {
-		int progressPercentage = (completedTasks * 100) / daysForecasted;
-		System.out.println("Progress for location " + location.getName() + ": " + progressPercentage + "%");
 	}
 
 	private void resetProgress() {
