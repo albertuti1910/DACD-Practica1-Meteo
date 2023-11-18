@@ -53,7 +53,7 @@ The project employs several design patterns and principles:
 
 ### Class Diagram
 
-[Class diagram goes here]
+![image](https://github.com/albertuti1910/DACD-Practica1-Meteo/blob/master/image.png)
 
 ### Dependency Relations
 
